@@ -38,3 +38,4 @@ C:\Users\Mirza\source\repos\R&TPSystem\Api\obj\Debug\net10.0\refint\Api.dll
 C:\Users\Mirza\source\repos\R&TPSystem\Api\obj\Debug\net10.0\Api.pdb
 C:\Users\Mirza\source\repos\R&TPSystem\Api\obj\Debug\net10.0\Api.genruntimeconfig.cache
 C:\Users\Mirza\source\repos\R&TPSystem\Api\obj\Debug\net10.0\ref\Api.dll
+C:\Users\Mirza\source\repos\R&TPSystem\Api\obj\Debug\net10.0\Api.sourcelink.json

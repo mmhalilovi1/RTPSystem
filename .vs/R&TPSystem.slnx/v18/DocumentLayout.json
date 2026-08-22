@@ -3,16 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{007228DE-4084-47EE-A444-34086D1205BB}|Api\\Api.csproj|c:\\users\\mirza\\source\\repos\\r\u0026tpsystem\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{007228DE-4084-47EE-A444-34086D1205BB}|Api\\Api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{007228DE-4084-47EE-A444-34086D1205BB}|Api\\Api.csproj|c:\\users\\mirza\\source\\repos\\r\u0026tpsystem\\api\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{007228DE-4084-47EE-A444-34086D1205BB}|Api\\Api.csproj|solutionrelative:api\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{007228DE-4084-47EE-A444-34086D1205BB}|Api\\Api.csproj|c:\\users\\mirza\\source\\repos\\r\u0026tpsystem\\api\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{007228DE-4084-47EE-A444-34086D1205BB}|Api\\Api.csproj|solutionrelative:api\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E528BBC3-1C26-8C35-F682-23718816ADCD}|Domain\\Domain.csproj|c:\\users\\mirza\\source\\repos\\r\u0026tpsystem\\domain\\entities\\application.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E528BBC3-1C26-8C35-F682-23718816ADCD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\application.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,40 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\Program.cs",
-              "RelativeDocumentMoniker": "Api\\Program.cs",
-              "ToolTip": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\Program.cs",
-              "RelativeToolTip": "Api\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAhAAAAAAAAAA==",
+              "Title": "Application.cs",
+              "DocumentMoniker": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Domain\\Entities\\Application.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Application.cs",
+              "ToolTip": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Domain\\Entities\\Application.cs",
+              "RelativeToolTip": "Domain\\Entities\\Application.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-20T06:48:58.778Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "WeatherForecastController.cs",
-              "DocumentMoniker": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\Controllers\\WeatherForecastController.cs",
-              "RelativeDocumentMoniker": "Api\\Controllers\\WeatherForecastController.cs",
-              "ToolTip": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\Controllers\\WeatherForecastController.cs",
-              "RelativeToolTip": "Api\\Controllers\\WeatherForecastController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-20T06:54:00.895Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ProductsController.cs",
-              "DocumentMoniker": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\Controllers\\ProductsController.cs",
-              "RelativeDocumentMoniker": "Api\\Controllers\\ProductsController.cs",
-              "ToolTip": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\Controllers\\ProductsController.cs",
-              "RelativeToolTip": "Api\\Controllers\\ProductsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-20T06:52:00.143Z",
+              "WhenOpened": "2026-08-22T08:06:58.118Z",
               "EditorCaption": ""
             }
           ]
