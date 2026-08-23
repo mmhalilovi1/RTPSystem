@@ -13,8 +13,8 @@ namespace Domain.Entities
         public string PhoneNumber { get; private set; }
         public string? ResumeUrl { get; private set; }
         public int YearsOfExperience { get; private set; }
-        private readonly List<string> skills = new();
-        public IReadOnlyCollection<string> Skills => skills.AsReadOnly();
+        private readonly List<Skill> skills = new();
+        public IReadOnlyCollection<Skill> Skills => skills.AsReadOnly();
         public DateTime CreatedAt { get; private set; }
 
         private Candidate() { }
@@ -67,20 +67,17 @@ namespace Domain.Entities
             }
         }
 
-        public void AddSkill(string skill)
+        public void AddSkill(Skill skill)
         {
-            if (string.IsNullOrWhiteSpace(skill))
-                throw new ArgumentException("Vještina ne može biti prazna.", nameof(skill));
-
-            if (skills.Contains(skill))
+            if (skills.Any(s => s.Name == skill.Name))
                 throw new InvalidOperationException("Vještina je već dodana.");
 
             skills.Add(skill);
         }
 
-        public void RemoveSkill(string skill)
+        public void RemoveSkill(Skill skill)
         {
-            if (!skills.Contains(skill))
+            if (!skills.Any(s => s.Name == skill.Name))
                 throw new InvalidOperationException("Vještina ne postoji.");
 
             skills.Remove(skill);

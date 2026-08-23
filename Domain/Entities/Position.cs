@@ -13,21 +13,19 @@ namespace Domain.Entities
         public string Description { get; private set; }
         public string Location { get; private set; }
         public EmploymentType EmploymentType { get; private set; }
-        private readonly List<string> requiredSkills = new();
-        public IReadOnlyCollection<string> RequiredSkills => requiredSkills;
+        private readonly List<Skill> requiredSkills = new();
+        public IReadOnlyCollection<Skill> RequiredSkills => requiredSkills;
         public int RequiredExperience { get; private set; }
         public PositionStatus Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? ClosedAt { get; private set; }
         public DateTime Deadline {  get; private set; }
 
-        //public User CreatedBy { get; private set; }
-
         private Position() { }
 
         public Position(
             string title, string description, string location, EmploymentType emplType, 
-            List<string> skills, int experience, DateTime deadline)
+            List<Skill> skills, int experience, DateTime deadline)
         {
             if (string.IsNullOrWhiteSpace(title))
                 throw new ArgumentException("Naslov pozicije je obavezan.", nameof(title));
@@ -115,20 +113,17 @@ namespace Domain.Entities
             return Status == PositionStatus.Open && Deadline > DateTime.UtcNow;
         }
 
-        public void AddRequiredSkill(string skill)
-        {
-            if (string.IsNullOrWhiteSpace(skill))
-                throw new ArgumentException("Vještina ne može biti prazna.", nameof(skill));
-
-            if (requiredSkills.Contains(skill))
+        public void AddRequiredSkill(Skill skill)
+        {           
+            if (requiredSkills.Any(s => s.Name == skill.Name))
                 throw new InvalidOperationException("Vještina već postoji.");
 
             requiredSkills.Add(skill);
         }
 
-        public void RemoveRequiredSkill(string skill)
+        public void RemoveRequiredSkill(Skill skill)
         {
-            if (!requiredSkills.Contains(skill))
+            if (!requiredSkills.Any(s => s.Name == skill.Name))
                 throw new InvalidOperationException("Skill ne postoji");
 
             requiredSkills.Remove(skill);
