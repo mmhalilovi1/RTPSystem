@@ -25,7 +25,7 @@ namespace Infrastructure.Persistance.Configurations
             builder.Property(p => p.Location)
                 .HasMaxLength(200);
 
-            // enum eksplicitno čuvao kao string radi čitljivosti u bazi
+            // enum eksplicitno čuvam kao string radi čitljivosti u bazi
             builder.Property(p => p.Status)
                 .HasConversion<string>()
                 .HasMaxLength(20);
@@ -48,9 +48,7 @@ namespace Infrastructure.Persistance.Configurations
 
             builder.HasMany(p => p.RequiredSkills)
                 .WithMany()
-                .UsingEntity(j => j.ToTable("PositionSkills"));
-
-            //  Treba dodati relationship sa Application entitetom.
+                .UsingEntity(j => j.ToTable("PositionSkills"));         
         }
     }
 }

@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|c:\\users\\mirza\\source\\repos\\r\u0026tpsystem\\infrastructure\\persistance\\configurations\\positionconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistance\\configurations\\positionconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|c:\\users\\mirza\\source\\repos\\r\u0026tpsystem\\infrastructure\\migrations\\20260825103338_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\20260825103338_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|Api\\Api.csproj|c:\\users\\mirza\\source\\repos\\r\u0026tpsystem\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|Api\\Api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|Api\\Api.csproj|c:\\users\\mirza\\source\\repos\\r\u0026tpsystem\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|Api\\Api.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E528BBC3-1C26-8C35-F682-23718816ADCD}|Domain\\Domain.csproj|c:\\users\\mirza\\source\\repos\\r\u0026tpsystem\\domain\\entities\\position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E528BBC3-1C26-8C35-F682-23718816ADCD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +31,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PositionConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Infrastructure\\Persistance\\Configurations\\PositionConfiguration.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Persistance\\Configurations\\PositionConfiguration.cs",
-              "ToolTip": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Infrastructure\\Persistance\\Configurations\\PositionConfiguration.cs",
-              "RelativeToolTip": "Infrastructure\\Persistance\\Configurations\\PositionConfiguration.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "Title": "20260825103338_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Infrastructure\\Migrations\\20260825103338_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20260825103338_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Infrastructure\\Migrations\\20260825103338_InitialCreate.cs",
+              "RelativeToolTip": "Infrastructure\\Migrations\\20260825103338_InitialCreate.cs",
+              "ViewState": "AgIAALUAAAAAAAAAAAAQwMQAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-23T10:58:36.955Z",
+              "WhenOpened": "2026-08-25T10:34:05.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\Program.cs",
+              "RelativeDocumentMoniker": "Api\\Program.cs",
+              "ToolTip": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\Program.cs",
+              "RelativeToolTip": "Api\\Program.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABAAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T09:44:05.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\appsettings.json",
+              "RelativeDocumentMoniker": "Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Api\\appsettings.json",
+              "RelativeToolTip": "Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAB2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-25T09:43:09.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Position.cs",
+              "DocumentMoniker": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Domain\\Entities\\Position.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Position.cs",
+              "ToolTip": "C:\\Users\\Mirza\\source\\repos\\R\u0026TPSystem\\Domain\\Entities\\Position.cs",
+              "RelativeToolTip": "Domain\\Entities\\Position.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAzwA8AAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T09:35:41.449Z",
               "EditorCaption": ""
             }
           ]

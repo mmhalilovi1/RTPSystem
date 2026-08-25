@@ -14,7 +14,7 @@ namespace Domain.Entities
         public string Location { get; private set; }
         public EmploymentType EmploymentType { get; private set; }
         private readonly List<Skill> requiredSkills = new();
-        public IReadOnlyCollection<Skill> RequiredSkills => requiredSkills;
+        public IReadOnlyCollection<Skill> RequiredSkills => requiredSkills.AsReadOnly();
         public int RequiredExperience { get; private set; }
         public PositionStatus Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
