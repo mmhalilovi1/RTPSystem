@@ -8,6 +8,7 @@ namespace Domain.Enums
     {
         Admin,
         Recruiter,
-        Candidate
+        Candidate,
+        Guest
     }
 }
