@@ -28,7 +28,7 @@ namespace Infrastructure.Services
 
             var passwordHash = _passwordHasher.Hash(registerRequestDto.Password);
 
-            var user = new User(registerRequestDto.Email, passwordHash, Domain.Enums.UserRole.Guest);
+            var user = new User(registerRequestDto.Email, passwordHash);
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();

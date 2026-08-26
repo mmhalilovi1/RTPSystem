@@ -29,6 +29,11 @@ namespace Infrastructure.Persistance.Configurations
             builder.Property(u => u.Role)
                 .HasConversion<string>()
                 .HasMaxLength(30)
+                .IsRequired(false);
+
+            builder.Property(u => u.Status)
+                .HasConversion<string>()
+                .HasMaxLength(30)
                 .IsRequired();
 
             builder.Property(u => u.IsActive)

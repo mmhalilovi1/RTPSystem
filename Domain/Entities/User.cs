@@ -10,13 +10,14 @@ namespace Domain.Entities
         public Guid Id { get; private set; }
         public string Email { get; private set; }
         public string PasswordHash { get; private set; }
-        public UserRole Role { get; private set; }
+        public UserRole? Role { get; private set; }
+        public ApprovalStatus Status { get; private set; }
         public bool IsActive { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
         private User() { }
 
-        public User(string email, string passwordHash, UserRole role)
+        public User(string email, string passwordHash)
         {
             if (string.IsNullOrWhiteSpace(email) || !email.Contains('@'))
                 throw new ArgumentException("Email nije validan.", nameof(email));
@@ -27,7 +28,8 @@ namespace Domain.Entities
             Id = Guid.NewGuid();
             Email = email;
             PasswordHash = passwordHash;
-            Role = role;
+            Role = null;
+            Status = ApprovalStatus.PendingRoleSelection;   
             IsActive = true;
             CreatedAt = DateTime.UtcNow;
         }
@@ -56,6 +58,33 @@ namespace Domain.Entities
                 throw new InvalidOperationException("Korisnik je već aktivan.");
 
             IsActive = true;
+        }
+
+        public void ApproveRecruiter()
+        {
+            if (Status != ApprovalStatus.PendingApproval)
+                throw new InvalidOperationException("Korisnik ne čeka na odobrenje");
+
+            Status = ApprovalStatus.Approved;
+        }
+
+        public void RejectRecruiter()
+        {
+            if (Status != ApprovalStatus.PendingApproval)
+                throw new InvalidOperationException("Korisnik ne čeka na odobrenje");
+
+            if (Status == ApprovalStatus.Rejected)
+                throw new InvalidOperationException("Korisnik je već odbijen");
+
+            Status = ApprovalStatus.Rejected;
+        }
+
+        public void BecomeCandidate()
+        {
+            if (Role == UserRole.Recruiter || Role == UserRole.Admin)
+                throw new InvalidOperationException("Recruiter/Admin ne može istovremeno biti Candidate.");
+
+            Role = UserRole.Candidate;
         }
     }
 }
