@@ -27,4 +27,18 @@ public class AuthController : ControllerBase
 
         return Ok("Uspješna registracija!");
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(RegisterRequestDto request)
+    {
+        var authResponse = await _authService.Login(request);
+        return Ok(authResponse);
+    }
+
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh(RefreshTokenDto refreshToken)
+    {
+        var authResponse = await _authService.Refresh(refreshToken);
+        return Ok(authResponse);
+    }
 }

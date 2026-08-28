@@ -41,6 +41,11 @@ namespace Infrastructure.Persistance.Configurations
 
             builder.Property(u => u.CreatedAt)
                 .IsRequired();
+
+            builder.HasMany<RefreshToken>()
+                .WithOne()
+                .HasForeignKey(rt => rt.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

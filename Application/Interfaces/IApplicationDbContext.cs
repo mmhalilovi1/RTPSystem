@@ -15,6 +15,7 @@ namespace Application.Interfaces
         DbSet<Domain.Entities.Application> Applications { get; }
         DbSet<InterviewStage> InterviewStages { get; }
         DbSet<Feedback> Feedbacks { get; }
+        DbSet<RefreshToken> RefreshTokens { get; }  
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
