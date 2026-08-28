@@ -14,11 +14,16 @@ namespace Infrastructure.Services
         private readonly IApplicationDbContext _context;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly ITokenHasher _tokenHasher;
 
-        public AuthService(IApplicationDbContext context, IPasswordHasher passwordHasher)
+        public AuthService(
+            IApplicationDbContext context, 
+            IPasswordHasher passwordHasher,
+            ITokenHasher tokenHasher)
         {
             _context = context;
             _passwordHasher = passwordHasher;
+            _tokenHasher = tokenHasher;
         }
 
         public async Task<bool> Register(RegisterRequestDto registerRequestDto)
@@ -37,7 +42,7 @@ namespace Infrastructure.Services
             return true;
         }
 
-        public async Task<AuthResponseDto> Login(RegisterRequestDto loginRequestDto)
+        public async Task<AuthResponseDto> Login(LoginDto loginRequestDto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == loginRequestDto.Email);
 
@@ -52,7 +57,7 @@ namespace Infrastructure.Services
             var accessToken = _jwtTokenGenerator.GenerateToken(user);
             var refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
-            var refreshTokenHash = _passwordHasher.Hash(refreshToken);
+            var refreshTokenHash = _tokenHasher.Hash(refreshToken);
             var refreshTokenEntity = new RefreshToken(user.Id, refreshTokenHash);
 
             _context.RefreshTokens.Add(refreshTokenEntity);
@@ -68,22 +73,13 @@ namespace Infrastructure.Services
 
         public async Task<AuthResponseDto> Refresh(RefreshTokenDto refreshTokenRequestDto)
         {
-            var refreshTokens = await _context.RefreshTokens
-                .Where(x =>
+            var incomingHash = _tokenHasher.Hash(refreshTokenRequestDto.RefreshToken);
+
+            var refreshToken = await _context.RefreshTokens
+                .FirstOrDefaultAsync(x =>
+                    x.TokenHash == incomingHash &&
                     x.RevokedAt == null &&
-                    x.ExpiresAt > DateTime.UtcNow)
-                .ToListAsync();
-
-            RefreshToken? refreshToken = null;
-
-            foreach (var token in refreshTokens)
-            {
-                if (_passwordHasher.Verify(refreshTokenRequestDto.RefreshToken, token.TokenHash))
-                {
-                    refreshToken = token;
-                    break;
-                }
-            }
+                    x.ExpiresAt > DateTime.UtcNow);
 
             if (refreshToken is null)
                 throw new UnauthorizedAccessException("Neispravan refresh token.");
@@ -99,7 +95,7 @@ namespace Infrastructure.Services
             var accessToken = _jwtTokenGenerator.GenerateToken(user);
             var newRefreshTokenValue = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
-            var newRefreshTokenHash = _passwordHasher.Hash(newRefreshTokenValue);
+            var newRefreshTokenHash = _tokenHasher.Hash(newRefreshTokenValue);
             var newRefreshToken = new RefreshToken(user.Id, newRefreshTokenHash);
 
             _context.RefreshTokens.Add(newRefreshToken);

@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -29,16 +30,30 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(RegisterRequestDto request)
+    public async Task<IActionResult> Login(LoginDto request)
     {
-        var authResponse = await _authService.Login(request);
-        return Ok(authResponse);
+        try
+        {
+            var authResponse = await _authService.Login(request);
+            return Ok(authResponse);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
     }
 
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh(RefreshTokenDto refreshToken)
     {
-        var authResponse = await _authService.Refresh(refreshToken);
-        return Ok(authResponse);
+        try
+        {
+            var authResponse = await _authService.Refresh(refreshToken);
+            return Ok(authResponse);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
     }
 }

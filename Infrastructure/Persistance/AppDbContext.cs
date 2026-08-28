@@ -20,6 +20,7 @@ namespace Infrastructure.Persistance
         public DbSet<Domain.Entities.Application> Applications => Set<Domain.Entities.Application>();
         public DbSet<InterviewStage> InterviewStages => Set<InterviewStage>();
         public DbSet<Feedback> Feedbacks => Set<Feedback>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

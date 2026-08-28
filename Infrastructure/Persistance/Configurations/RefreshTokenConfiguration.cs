@@ -22,7 +22,9 @@ namespace Infrastructure.Persistance.Configurations
                 .IsRequired();
 
             builder.Property(t => t.RevokedAt)
-                .IsRequired(false);         
+                .IsRequired(false);
+
+            builder.HasIndex(rt => rt.TokenHash);
         }
     }
 }
