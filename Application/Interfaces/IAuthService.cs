@@ -10,5 +10,6 @@ namespace Application.Interfaces
         Task<bool> Register(RegisterRequestDto registerRequestDto);
         Task<AuthResponseDto> Login(LoginDto loginDto);
         Task<AuthResponseDto> Refresh(RefreshTokenDto refreshTokenDto);
+        Task ApproveRecruiter(Guid userId);
     }
 }

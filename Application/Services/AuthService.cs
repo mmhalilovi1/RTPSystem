@@ -19,10 +19,12 @@ namespace Infrastructure.Services
         public AuthService(
             IApplicationDbContext context, 
             IPasswordHasher passwordHasher,
+            IJwtTokenGenerator jwtTokenGenerator,
             ITokenHasher tokenHasher)
         {
             _context = context;
             _passwordHasher = passwordHasher;
+            _jwtTokenGenerator = jwtTokenGenerator;
             _tokenHasher = tokenHasher;
         }
 
@@ -107,6 +109,18 @@ namespace Infrastructure.Services
                 AccessToken = accessToken,
                 RefreshToken = newRefreshTokenValue
             };
+        }
+
+        public async Task ApproveRecruiter(Guid userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            
+            if(user is null)
+                throw new UnauthorizedAccessException("Korisnik nije pronađen.");
+           
+            user.ApproveRecruiter();
+            
+            await _context.SaveChangesAsync();
         }
     }
 }

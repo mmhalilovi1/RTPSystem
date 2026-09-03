@@ -34,7 +34,7 @@ namespace Domain.Entities
             CreatedAt = DateTime.UtcNow;
         }
 
-        // hashovanje se ne radi ovdje jer entitet prima već hashovanu lozinku
+        // hashiranje se ne radi ovdje jer entitet prima već hashovanu lozinku
         // Hash algoritam je briga infrastrukture
         public void ChangePassword(string newPasswordHash)
         {
@@ -66,6 +66,7 @@ namespace Domain.Entities
                 throw new InvalidOperationException("Korisnik ne čeka na odobrenje");
 
             Status = ApprovalStatus.Approved;
+            Role = UserRole.Recruiter;
         }
 
         public void RejectRecruiter()
@@ -77,6 +78,7 @@ namespace Domain.Entities
                 throw new InvalidOperationException("Korisnik je već odbijen");
 
             Status = ApprovalStatus.Rejected;
+            Role = UserRole.Guest;
         }
 
         public void BecomeCandidate()

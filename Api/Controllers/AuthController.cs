@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
 using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -50,6 +51,21 @@ public class AuthController : ControllerBase
         {
             var authResponse = await _authService.Refresh(refreshToken);
             return Ok(authResponse);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+    }
+
+    [HttpPost("approve-recruiter/{userId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> ApproveRecruiter(Guid userId)
+    {
+        try
+        {
+            await _authService.ApproveRecruiter(userId);
+            return Ok();
         }
         catch (UnauthorizedAccessException ex)
         {
