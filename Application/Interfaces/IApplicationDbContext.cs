@@ -1,7 +1,6 @@
 ﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
-//using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 
@@ -16,6 +15,7 @@ namespace Application.Interfaces
         DbSet<InterviewStage> InterviewStages { get; }
         DbSet<Feedback> Feedbacks { get; }
         DbSet<RefreshToken> RefreshTokens { get; }  
+        DbSet<Skill> Skills { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -21,6 +21,7 @@ namespace Infrastructure.Persistance
         public DbSet<InterviewStage> InterviewStages => Set<InterviewStage>();
         public DbSet<Feedback> Feedbacks => Set<Feedback>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+        public DbSet<Skill> Skills => Set<Skill>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
