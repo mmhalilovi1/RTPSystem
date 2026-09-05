@@ -19,7 +19,7 @@ namespace Domain.Entities
 
         private Candidate() { }
 
-        public Candidate(Guid userId, string fullName, string phoneNumber, int yearsOfExperience)
+        public Candidate(Guid userId, string fullName, string phoneNumber, int yearsOfExperience, List<Skill> skillss)
         {
             if (userId == Guid.Empty)
                 throw new ArgumentException("UserId je obavezan.", nameof(userId));
@@ -35,6 +35,7 @@ namespace Domain.Entities
             FullName = fullName;
             PhoneNumber = phoneNumber;
             YearsOfExperience = yearsOfExperience;
+            skills = skillss;
             CreatedAt = DateTime.UtcNow;
         }
 
