@@ -5,11 +5,9 @@ using System.Text;
 
 namespace Application.DTOs
 {
-    public class AuthResponseDto
+    public class SubmitApplicationRequestDto
     {
-        
-        public string AccessToken { get; set; }
-        
-        public string RefreshToken { get; set; }
+        [Required]
+        public Guid PositionId { get; set; }   
     }
 }

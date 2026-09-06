@@ -8,19 +8,12 @@ namespace Application.DTOs
 {
     public class CandidateResponseDto
     {
-        [Required]
         public Guid Id { get; set; }
-        [Required]
         public Guid UserId { get; set; }
-        [Required, MaxLength(200)]
         public string FullName { get; set; }
-        [Required, MaxLength(50)]
         public string PhoneNumber { get; set; }
-        [Required, Range(0, 40)]
         public int YearsOfExperience { get; set; }
-        [Required]
         public List<string> Skills { get; set; }
-        [Required]
         public DateTime CreatedAt { get; set; }
 
         public static CandidateResponseDto FromEntity(Domain.Entities.Candidate candidate)

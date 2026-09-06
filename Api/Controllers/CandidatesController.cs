@@ -25,7 +25,7 @@ namespace Api.Controllers
             return CreatedAtAction(nameof(GetCandidateById), new { id = candidate.Id }, candidate);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         [Authorize]
         public async Task<IActionResult> GetCandidateById(Guid id)
         {
@@ -42,7 +42,7 @@ namespace Api.Controllers
             return Ok(candidates);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("{id:guid}")]
         [Authorize(Roles = "Candidate")]
         public async Task<IActionResult> UpdateCandidate(Guid id, CandidateUpdateDto updateDto)
         {
@@ -51,7 +51,7 @@ namespace Api.Controllers
             return Ok(candidate);
         }
 
-        [HttpPost("{id}/resume")]
+        [HttpPost("{id:guid}/resume")]
         [Authorize(Roles = "Candidate")]
         public async Task<IActionResult> UploadResume(Guid id, UploadResumeRequestDto request)
         {
@@ -59,7 +59,7 @@ namespace Api.Controllers
             return Ok();
         }
 
-        [HttpPost("{id}/skills")]
+        [HttpPost("{id:guid}/skills")]
         [Authorize(Roles = "Candidate")]
         public async Task<IActionResult> AddSkill(Guid id, AddSkillRequestDto request)
         {
@@ -67,7 +67,7 @@ namespace Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}/skills/{skillName}")]
+        [HttpDelete("{id:guid}/skills/{skillName}")]
         [Authorize(Roles = "Candidate")]
         public async Task<IActionResult> RemoveSkill(Guid id, [FromRoute] string skillName)
         {

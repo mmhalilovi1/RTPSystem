@@ -39,8 +39,6 @@ namespace Domain.Entities
                 throw new InvalidOperationException(
                     "Ne može se mijenjati status aplikacije koja je već zatvorena.");
 
-            // Ovdje dodati i provjeru validnog redoslijeda faza
-
             Status = nextStatus;
 
             if (nextStatus == ApplicationStatus.Rejected || nextStatus == ApplicationStatus.Accepted)
