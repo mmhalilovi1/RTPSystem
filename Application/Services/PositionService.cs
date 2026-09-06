@@ -66,24 +66,47 @@ namespace Application.Services
             return PositionResponseDto.FromEntity(position);
         }
 
-        public async Task<List<PositionResponseDto>> GetAllAsync()
+        public async Task<List<PositionResponseDto>> GetAllAsync(PositionFilterDto filter)
         {
-            var positions = await _context.Positions
-                .Include(p => p.RequiredSkills)
-                .ToListAsync();
-
-            return positions.Select(PositionResponseDto.FromEntity).ToList();
-        }
-
-        public async Task<List<PositionResponseDto>> GetAllOpenAsync()
-        {
-            var positions = await _context.Positions
+            var query = _context.Positions
                 .Include(p => p.RequiredSkills)
                 .Where(p => p.Status == PositionStatus.Open)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filter.Location))
+                query = query.Where(p => p.Location.Contains(filter.Location));
+
+            if (filter.EmploymentType.HasValue)
+                query = query.Where(p => p.EmploymentType == filter.EmploymentType.Value);
+
+            if (filter.MinRequiredExperience.HasValue)
+                query = query.Where(p => p.RequiredExperience >= filter.MinRequiredExperience.Value);
+
+            var positions = await query.ToListAsync();
+            return positions.Select(PositionResponseDto.FromEntity).ToList();
+        }
+
+        public async Task<List<PositionResponseDto>> GetAllOpenAsync(PositionFilterDto filter)
+        {
+            var query = _context.Positions
+                .Include(p => p.RequiredSkills)
+                .Where(p => p.Status == PositionStatus.Open)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filter.Location))
+                query = query.Where(p => p.Location.Contains(filter.Location));
+
+            if (filter.EmploymentType.HasValue)
+                query = query.Where(p => p.EmploymentType == filter.EmploymentType.Value);
+
+            if (filter.MinRequiredExperience.HasValue)
+                query = query.Where(p => p.RequiredExperience >= filter.MinRequiredExperience.Value);
+
+            var positions = await query.ToListAsync();
 
             return positions.Select(PositionResponseDto.FromEntity).ToList();
         }
+
 
         public async Task<PositionResponseDto?> UpdateAsync(Guid positionId, PositionUpdateDto updateDto)
         {

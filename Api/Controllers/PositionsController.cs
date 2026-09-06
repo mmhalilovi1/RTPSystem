@@ -49,16 +49,16 @@ namespace Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin, Recruiter")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PositionFilterDto filter)
         {
-            var result = await _positionService.GetAllAsync();
+            var result = await _positionService.GetAllAsync(filter);
             return Ok(result);
         }
 
         [HttpGet("open")]
-        public async Task<IActionResult> GetAllOpen()
+        public async Task<IActionResult> GetAllOpen([FromQuery] PositionFilterDto filter)
         {
-            var result = await _positionService.GetAllOpenAsync();
+            var result = await _positionService.GetAllOpenAsync(filter);
             return Ok(result);
         }
 

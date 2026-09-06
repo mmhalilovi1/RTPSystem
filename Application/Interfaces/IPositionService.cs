@@ -10,8 +10,8 @@ namespace Application.Interfaces
         Task<PositionResponseDto> CreateAsync(PositionRequestDto request);
         Task<PositionResponseDto?> GetByIdAsync(Guid positionId);
         Task<PositionResponseDto?> GetbyIdOpenAsync(Guid positionId);
-        Task<List<PositionResponseDto>> GetAllAsync();
-        Task<List<PositionResponseDto>> GetAllOpenAsync();
+        Task<List<PositionResponseDto>> GetAllAsync(PositionFilterDto filter);
+        Task<List<PositionResponseDto>> GetAllOpenAsync(PositionFilterDto filter);
         Task<PositionResponseDto?> UpdateAsync(Guid positionId, PositionUpdateDto updateDto);
         Task DeleteAsync(Guid positionId);
         Task PublishAsync(Guid positionId);
