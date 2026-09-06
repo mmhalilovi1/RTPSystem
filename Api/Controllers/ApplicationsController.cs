@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Azure;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -72,6 +73,22 @@ namespace Api.Controllers
         {
             var result = await _applicationService.CompleteInterviewStageAsync(id, stageId, request.Outcome, request.Notes);
             return Ok(result);
+        }
+
+        [HttpPost("{id:guid}/interview-stages/{stageId:guid}/feedback")]
+        [Authorize(Roles = "Admin, Recruiter")]
+        public async Task<IActionResult> AddFeedback(Guid id, Guid stageId, FeedbackRequestDto request)
+        {
+            var response = await _applicationService.AddFeedbackAsync(id, stageId, request);
+            return CreatedAtAction(nameof(GetFeedbackForStage), new { id, stageId }, response);
+        }
+
+        [HttpGet("{id:guid}/interview-stages/{stageId:guid}/feedback")]
+        [Authorize(Roles = "Admin, Recruiter")]
+        public async Task<IActionResult> GetFeedbackForStage(Guid id, Guid stageId)
+        {
+            var response = await _applicationService.GetFeedbackForStageAsync(id, stageId);
+            return Ok(response);
         }
     }
 }

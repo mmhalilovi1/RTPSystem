@@ -12,5 +12,8 @@ namespace Application.Interfaces
         Task<InterviewStageResponseDto> AddInterviewStageAsync(Guid applicationId, InterviewStageType stageType);
         Task<InterviewStageResponseDto> ScheduleInterviewStageAsync(Guid applicationId, Guid interviewStageId, DateTime scheduledAt);
         Task<InterviewStageResponseDto> CompleteInterviewStageAsync(Guid applicationId, Guid interviewStageId, InterviewOutcome outcome, string? notes = null);
+        Task<FeedbackResponseDto> AddFeedbackAsync(Guid applicationId, Guid stageId, FeedbackRequestDto request);
+        Task<List<FeedbackResponseDto>> GetFeedbackForStageAsync(Guid applicationId, Guid stageId);
+
     }
 }

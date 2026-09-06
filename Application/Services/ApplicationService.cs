@@ -161,7 +161,57 @@ namespace Application.Services
 
             await _context.SaveChangesAsync();
             return InterviewStageResponseDto.FromEntity(interviewStage);
+        }
 
+        public async Task<FeedbackResponseDto> AddFeedbackAsync(Guid applicationId, Guid stageId, FeedbackRequestDto request)
+        {
+            var application = await _context.Applications
+                .Include(a => a.InterviewStages)
+                .FirstOrDefaultAsync(a => a.Id == applicationId);
+
+            if (application == null)
+                throw new KeyNotFoundException("Prijava nije pronađena");
+
+            var interviewStage = application.InterviewStages.FirstOrDefault(s => s.Id == stageId);
+
+            if (interviewStage == null)
+                throw new KeyNotFoundException("Intervju faza nije pronađena.");
+
+            if (interviewStage.Outcome == InterviewOutcome.Pending)
+                throw new InvalidOperationException("Ne možete ostaviti feedback na fazu koja nije završena.");
+
+            var feedback = new Feedback(
+                stageId,
+                _currentUserService.UserId,
+                request.Rating,
+                request.Comments
+            );
+
+            _context.Feedbacks.Add(feedback);
+            await _context.SaveChangesAsync();
+
+            return FeedbackResponseDto.FromEntity(feedback);
+        }
+
+        public async Task<List<FeedbackResponseDto>> GetFeedbackForStageAsync(Guid applicationId, Guid stageId)
+        {
+            var application = await _context.Applications
+                .Include(a => a.InterviewStages)
+                .FirstOrDefaultAsync(a => a.Id == applicationId);
+
+            if (application == null)
+                throw new KeyNotFoundException("Prijava nije pronađena");
+
+            var interviewStage = application.InterviewStages.FirstOrDefault(s => s.Id == stageId);
+
+            if (interviewStage == null)
+                throw new KeyNotFoundException("Intervju faza nije pronađena.");
+
+            var feedbacks = await _context.Feedbacks
+                .Where(f => f.InterviewStageId == interviewStage.Id)
+                .ToListAsync();
+
+            return feedbacks.Select(FeedbackResponseDto.FromEntity).ToList();
         }
     }
 }
