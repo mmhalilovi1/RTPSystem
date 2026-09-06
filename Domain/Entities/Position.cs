@@ -123,10 +123,13 @@ namespace Domain.Entities
 
         public void RemoveRequiredSkill(Skill skill)
         {
-            if (!requiredSkills.Any(s => s.Name == skill.Name))
+            var existingSkill = requiredSkills.FirstOrDefault(s => s.Name == skill.Name);
+
+            if (existingSkill == null)
                 throw new InvalidOperationException("Skill ne postoji");
 
-            requiredSkills.Remove(skill);
+            requiredSkills.Remove(existingSkill);
         }
+
     }
 }

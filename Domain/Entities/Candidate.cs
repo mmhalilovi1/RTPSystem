@@ -78,10 +78,12 @@ namespace Domain.Entities
 
         public void RemoveSkill(Skill skill)
         {
-            if (!skills.Any(s => s.Name == skill.Name))
+            var existingSkill = skills.FirstOrDefault(s => s.Name == skill.Name);
+
+            if (existingSkill == null)
                 throw new InvalidOperationException("Vještina ne postoji.");
 
-            skills.Remove(skill);
+            skills.Remove(existingSkill);
         }
     }
 }
