@@ -1,0 +1,25 @@
+<div class="auth-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
+    <h1>Registracija</h1>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" formControlName="email" />
+    @if (form.get('email')?.invalid && form.get('email')?.touched) {
+    <span class="field-error">Unesite validan email.</span>
+    }
+
+    <label for="password">Lozinka</label>
+    <input id="password" type="password" formControlName="password" />
+    @if (form.get('password')?.invalid && form.get('password')?.touched) {
+    <span class="field-error">Lozinka je obavezna.</span>
+    }
+
+    @if (errorMessage) {
+    <div class="form-error">{{ errorMessage }}</div>
+    }
+
+    <button type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Registracija u toku...' : 'Registruj se' }}
+    </button>
+  </form>
+</div>

@@ -1,0 +1,32 @@
+<div class="positions-page">
+  <h1>Otvorene pozicije</h1>
+
+  <form [formGroup]="filterForm" class="filter-bar">
+    <input formControlName="location" placeholder="Lokacija" />
+    <select formControlName="employmentType">
+      <option value="">Sve vrste</option>
+      <option value="Internship">Praksa</option>
+      <option value="PartTime">Part-time</option>
+      <option value="FullTime">Full-time</option>
+      <option value="Contract">Ugovor</option>
+    </select>
+    <input formControlName="minRequiredExperience" type="number" placeholder="Min. iskustvo" />
+  </form>
+
+  @if (isLoading) {
+  <p>Učitavanje...</p>
+  } @else {
+  <div class="position-cards">
+    @for (position of positions; track position.id) {
+    <div class="position-card">
+      <h3>{{ position.title }}</h3>
+      <p>{{ position.location }}</p>
+      <p>{{ position.employmentType }}</p>
+      <p>{{ position.requiredSkills.join(', ') }}</p>
+    </div>
+    } @empty {
+    <p>Nema pozicija koje odgovaraju filterima.</p>
+    }
+  </div>
+  }
+</div>
