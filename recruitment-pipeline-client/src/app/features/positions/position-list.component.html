@@ -13,11 +13,11 @@
     <input formControlName="minRequiredExperience" type="number" placeholder="Min. iskustvo" />
   </form>
 
-  @if (isLoading) {
+  @if (isLoading()) {
   <p>Učitavanje...</p>
   } @else {
   <div class="position-cards">
-    @for (position of positions; track position.id) {
+    @for (position of positions(); track position.id) {
     <div class="position-card">
       <h3>{{ position.title }}</h3>
       <p>{{ position.location }}</p>

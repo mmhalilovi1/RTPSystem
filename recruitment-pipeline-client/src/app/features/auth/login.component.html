@@ -14,12 +14,12 @@
     <span class="field-error">Lozinka je obavezna.</span>
     }
 
-    @if (errorMessage) {
-    <div class="form-error">{{ errorMessage }}</div>
+    @if (errorMessage()) {
+    <div class="form-error">{{ errorMessage() }}</div>
     }
 
-    <button type="submit" [disabled]="isSubmitting">
-      {{ isSubmitting ? 'Prijava u toku...' : 'Prijavi se' }}
+    <button type="submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Prijava u toku...' : 'Prijavi se' }}
     </button>
   </form>
 </div>

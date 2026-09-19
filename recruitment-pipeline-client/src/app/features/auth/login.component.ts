@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,8 +13,8 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class LoginComponent {
   private fb = inject(FormBuilder);
-  errorMessage: string | null = null;
-  isSubmitting = false;
+  errorMessage = signal<string | null>(null);
+  isSubmitting = signal(false);
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -32,16 +32,16 @@ export class LoginComponent {
       return;
     }
 
-    this.isSubmitting = true;
-    this.errorMessage = null;
+    this.isSubmitting.set(true);
+    this.errorMessage.set(null);
 
     this.authService.login(this.form.getRawValue() as { email: string; password: string }).subscribe({
       next: () => this.router.navigate(['/positions']),
       error: (err) => {
-        this.isSubmitting = false;
-        this.errorMessage = err.status === 401
-          ? 'Neispravan email ili lozinka.'
-          : 'Došlo je do greške. Pokušajte ponovo.';
+        this.isSubmitting.set(false);
+        this.errorMessage.set(
+          err.status === 401 ? 'Neispravan email ili lozinka.' : 'Došlo je do greške. Pokušajte ponovo.'
+        );
       }
     });
   }

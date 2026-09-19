@@ -69,8 +69,7 @@ namespace Application.Services
         public async Task<List<PositionResponseDto>> GetAllAsync(PositionFilterDto filter)
         {
             var query = _context.Positions
-                .Include(p => p.RequiredSkills)
-                .Where(p => p.Status == PositionStatus.Open)
+                .Include(p => p.RequiredSkills)                
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filter.Location))

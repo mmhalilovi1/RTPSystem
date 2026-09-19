@@ -1,8 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { Position, PositionService } from '../../core/services/position.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-position-list',
@@ -13,8 +14,8 @@ import { Position, PositionService } from '../../core/services/position.service'
 })
 export class PositionListComponent implements OnInit {
   private fb = inject(FormBuilder);
-  positions: Position[] = [];
-  isLoading = false;
+  positions = signal<Position[]>([]);
+  isLoading = signal(false);
 
   filterForm = this.fb.group({
     location: [''],
@@ -22,7 +23,7 @@ export class PositionListComponent implements OnInit {
     minRequiredExperience: [null as number | null]
   });
 
-  constructor(private positionService: PositionService) { }
+  constructor(private positionService: PositionService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loadPositions();
@@ -30,22 +31,33 @@ export class PositionListComponent implements OnInit {
     this.filterForm.valueChanges.pipe(debounceTime(400)).subscribe(() => {
       this.loadPositions();
     });
-  }
+  }  
 
   private loadPositions(): void {
-    this.isLoading = true;
+    this.isLoading.set(true);
     const raw = this.filterForm.getRawValue();
 
-    this.positionService.getAllOpen({
-      location: raw.location || undefined,
-      employmentType: raw.employmentType || undefined,
-      minRequiredExperience: raw.minRequiredExperience ?? undefined
-    }).subscribe({
+    const role = this.authService.getUserRole();
+    const isPrivileged = role === 'Admin' || role === 'Recruiter';
+
+    const request$ = isPrivileged
+      ? this.positionService.getAll({
+        location: raw.location || undefined,
+        employmentType: raw.employmentType || undefined,
+        minRequiredExperience: raw.minRequiredExperience ?? undefined
+      })
+      : this.positionService.getAllOpen({
+        location: raw.location || undefined,
+        employmentType: raw.employmentType || undefined,
+        minRequiredExperience: raw.minRequiredExperience ?? undefined
+      });
+
+    request$.subscribe({
       next: (positions) => {
-        this.positions = positions;
-        this.isLoading = false;
+        this.positions.set(positions);
+        this.isLoading.set(false);
       },
-      error: () => { this.isLoading = false; }
+      error: () => { this.isLoading.set(false); }
     });
   }
 }

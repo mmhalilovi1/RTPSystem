@@ -37,4 +37,16 @@ export class PositionService {
 
     return this.http.get<Position[]>(`${this.apiUrl}/open`, { params });
   }
+
+  getAll(filter: PositionFilter): Observable<Position[]> {
+    let params = new HttpParams();
+
+    if (filter.location) params = params.set('location', filter.location);
+    if (filter.employmentType) params = params.set('employmentType', filter.employmentType);
+    if (filter.minRequiredExperience != null) {
+      params = params.set('minRequiredExperience', filter.minRequiredExperience.toString());
+    }
+
+    return this.http.get<Position[]>(this.apiUrl, { params });
+  }
 }
