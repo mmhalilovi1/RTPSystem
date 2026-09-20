@@ -1,7 +1,6 @@
 ﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Application.DTOs;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
@@ -23,6 +22,15 @@ namespace Api.Controllers
         {
             var candidate = await _candidateService.CreateAsync(request);
             return CreatedAtAction(nameof(GetCandidateById), new { id = candidate.Id }, candidate);
+        }
+
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<IActionResult> GetMyProfile()
+        {
+            var candidate = await _candidateService.GetMyProfileAsync();
+            if (candidate == null) return NotFound();
+            return Ok(candidate);
         }
 
         [HttpGet("{id:guid}")]

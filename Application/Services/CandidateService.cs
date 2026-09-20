@@ -112,7 +112,17 @@ namespace Application.Services
                 throw new UnauthorizedAccessException("Nemate dozvolu da ažurirate ovaj profil kandidata.");
 
             var existingSkill = await _context.Skills.FirstOrDefaultAsync(s => s.Name == skill);
-            var skillToAdd = existingSkill ?? new Skill(skill);
+
+            Skill skillToAdd;
+            if (existingSkill != null)
+            {
+                skillToAdd = existingSkill;
+            }
+            else
+            {
+                skillToAdd = new Skill(skill);
+                _context.Skills.Add(skillToAdd);
+            }
 
             candidate.AddSkill(skillToAdd);
             await _context.SaveChangesAsync();
@@ -133,6 +143,17 @@ namespace Application.Services
 
             candidate.RemoveSkill(skillToRemove);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<CandidateResponseDto?> GetMyProfileAsync()
+        {
+            var userId = _currentUserService.UserId;
+
+            var candidate = await _context.Candidates
+                .Include(c => c.Skills)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            return candidate == null ? null : CandidateResponseDto.FromEntity(candidate);
         }
     }
 }

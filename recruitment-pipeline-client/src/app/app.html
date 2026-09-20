@@ -12,7 +12,9 @@
     @if (authService.role() === 'None') {
     <button (click)="requestRecruiter()" class="nav-link-button">Postani recruiter</button>
     }
+    @if (authService.role() !== 'Admin' && authService.role() !== 'Recruiter') {
     <a routerLink="/my-profile" routerLinkActive="active-link">Moj profil</a>
+    }
     <a routerLink="/my-applications" routerLinkActive="active-link">Moje prijave</a>
     <button (click)="logout()" class="nav-link-button">Odjava</button>
     } @else {

@@ -15,6 +15,7 @@ namespace Application.DTOs
         public int YearsOfExperience { get; set; }
         public List<string> Skills { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string? ResumeUrl { get; set; }
 
         public static CandidateResponseDto FromEntity(Domain.Entities.Candidate candidate)
         {
@@ -26,7 +27,8 @@ namespace Application.DTOs
                 PhoneNumber = candidate.PhoneNumber,
                 YearsOfExperience = candidate.YearsOfExperience,
                 Skills = candidate.Skills?.Select(s => s.Name).ToList() ?? new List<string>(),
-                CreatedAt = candidate.CreatedAt
+                CreatedAt = candidate.CreatedAt,
+                ResumeUrl = candidate.ResumeUrl
             };
         }
     }

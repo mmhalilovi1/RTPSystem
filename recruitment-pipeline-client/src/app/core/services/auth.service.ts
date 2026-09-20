@@ -63,6 +63,13 @@ export class AuthService {
     return this.http.post<void>(`${this.apiUrl}/request-recruiter-role`, {});
   }
 
+  refreshAccessToken(): Observable<AuthResponse> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    return this.http.post<AuthResponse>(`${this.apiUrl}/refresh`, { refreshToken }).pipe(
+      tap(response => this.storeTokens(response))
+    );
+  }
+
   private storeTokens(response: AuthResponse): void {
     localStorage.setItem('accessToken', response.accessToken);
     localStorage.setItem('refreshToken', response.refreshToken);

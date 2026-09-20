@@ -14,5 +14,6 @@ namespace Application.Interfaces
         Task UploadResumeAsync(Guid id, string resumeUrl); 
         Task AddSkillAsync(Guid id, string skill);
         Task RemoveSkillAsync(Guid id, string skill);
+        Task<CandidateResponseDto?> GetMyProfileAsync();
     }
 }

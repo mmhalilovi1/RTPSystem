@@ -1,0 +1,90 @@
+.profile-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.profile-form, .profile-card {
+  background: var(--color-slate);
+  border-left: 3px solid var(--color-peach);
+  padding: 2rem;
+}
+
+  .profile-form label {
+    display: block;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .profile-form input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    background: var(--color-ink);
+    border: 1px solid var(--color-border);
+    color: var(--color-paper);
+  }
+
+  .profile-form button {
+    margin-top: 1.5rem;
+  }
+
+.meta {
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.resume-section, .skills-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.no-resume {
+  color: var(--color-peach);
+  font-size: 0.9rem;
+}
+
+.inline-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+  .inline-form input {
+    flex: 1;
+    padding: 0.5rem 0.7rem;
+    background: var(--color-ink);
+    border: 1px solid var(--color-border);
+    color: var(--color-paper);
+  }
+
+.skills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.skill-tag {
+  background: var(--color-ink);
+  padding: 0.3rem 0.5rem 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.remove-skill {
+  background: transparent;
+  border: none;
+  color: var(--color-peach);
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.form-error {
+  margin-top: 1rem;
+  color: var(--color-peach);
+}
