@@ -26,7 +26,6 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        [Authorize(Roles = "Admin, Recruiter")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _positionService.GetByIdAsync(id);

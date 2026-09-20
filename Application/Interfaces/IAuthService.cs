@@ -11,5 +11,8 @@ namespace Application.Interfaces
         Task<AuthResponseDto> Login(LoginDto loginDto);
         Task<AuthResponseDto> Refresh(RefreshTokenDto refreshTokenDto);
         Task ApproveRecruiter(Guid userId);
+        Task RequestRecruiterRole();
+        Task RejectRecruiter(Guid userId);
+        Task<List<PendingRecruiterDto>> GetPendingRecruiters();
     }
 }

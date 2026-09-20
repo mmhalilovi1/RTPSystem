@@ -74,9 +74,6 @@ namespace Domain.Entities
             if (Status != ApprovalStatus.PendingApproval)
                 throw new InvalidOperationException("Korisnik ne čeka na odobrenje");
 
-            if (Status == ApprovalStatus.Rejected)
-                throw new InvalidOperationException("Korisnik je već odbijen");
-
             Status = ApprovalStatus.Rejected;
             Role = UserRole.Guest;
         }
@@ -87,6 +84,14 @@ namespace Domain.Entities
                 throw new InvalidOperationException("Recruiter/Admin ne može istovremeno biti Candidate.");
 
             Role = UserRole.Candidate;
+        }
+
+        public void RequestRecruiterRole()
+        {
+            if (Status != ApprovalStatus.PendingRoleSelection)
+                throw new InvalidOperationException("Zahtjev za recruiter rolu nije moguć u trenutnom stanju.");
+
+            Status = ApprovalStatus.PendingApproval;
         }
     }
 }

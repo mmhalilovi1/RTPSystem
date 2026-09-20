@@ -17,5 +17,12 @@ export class App {
     this.router.navigate(['/login']);
   }
 
+  requestRecruiter(): void {
+    this.authService.requestRecruiterRole().subscribe({
+      next: () => alert('Zahtjev poslan. Admin će ga uskoro pregledati.'),
+      error: (err) => alert(err.error?.message ?? 'Zahtjev nije uspio.')
+    });
+  }
+
   protected readonly title = signal('recruitment-pipeline-client');
 }

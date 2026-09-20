@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
@@ -21,7 +21,12 @@ export interface RegisterRequest {
 export class AuthService {
   private readonly apiUrl = 'http://localhost:5168/api/auth';
 
-  constructor(private http: HttpClient) {}
+  private accessTokenSignal = signal<string | null>(localStorage.getItem('accessToken'));
+
+  isLoggedIn = computed(() => !!this.accessTokenSignal());
+  role = computed(() => this.decodeRole(this.accessTokenSignal()));
+
+  constructor(private http: HttpClient) { }
 
   login(request: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, request).pipe(
@@ -36,33 +41,41 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    this.accessTokenSignal.set(null);
   }
 
   getAccessToken(): string | null {
-    return localStorage.getItem('accessToken');
+    return this.accessTokenSignal();
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getAccessToken();
-  }
-
-  getUserRole(): string | null {
-    const token = this.getAccessToken();
+  getUserId(): string | null {
+    const token = this.accessTokenSignal();
     if (!token) return null;
-
     try {
-      const payloadBase64 = token.split('.')[1];
-      const payloadJson = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'));
-      const payload = JSON.parse(payloadJson);
-
-      return payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ?? null;
+      const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      return payload['sub'] ?? null;
     } catch {
       return null;
     }
   }
 
+  requestRecruiterRole(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/request-recruiter-role`, {});
+  }
+
   private storeTokens(response: AuthResponse): void {
     localStorage.setItem('accessToken', response.accessToken);
     localStorage.setItem('refreshToken', response.refreshToken);
+    this.accessTokenSignal.set(response.accessToken);
+  }
+
+  private decodeRole(token: string | null): string | null {
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      return payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ?? null;
+    } catch {
+      return null;
+    }
   }
 }

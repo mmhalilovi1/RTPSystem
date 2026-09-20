@@ -1,0 +1,31 @@
+.admin-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.pending-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-slate);
+  border-left: 3px solid var(--color-peach);
+  padding: 1rem 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.row-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reject-button {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-paper);
+}
+
+  .reject-button:hover {
+    background: var(--color-clay);
+    border-color: var(--color-clay);
+  }

@@ -39,16 +39,22 @@
   background: var(--color-slate);
   border-left: 3px solid var(--color-peach);
   padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-  .position-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.4rem;
-  }
+.position-card:hover {
+  background: var(--color-border);
+}
 
-  .position-card p {
-    margin: 0.2rem 0;
-    color: var(--color-paper);
-    opacity: 0.85;
-    font-size: 0.9rem;
-  }
+.position-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.position-card p {
+  margin: 0.2rem 0;
+  color: var(--color-paper);
+  opacity: 0.85;
+  font-size: 0.9rem;
+}

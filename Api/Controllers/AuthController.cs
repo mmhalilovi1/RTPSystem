@@ -27,7 +27,7 @@ public class AuthController : ControllerBase
             return Conflict("Korisnik sa navedenim email-om već postoji.");
         }
 
-        return Ok("Uspješna registracija!");
+        return Ok();
     }
 
     [HttpPost("login")]
@@ -61,15 +61,32 @@ public class AuthController : ControllerBase
     [HttpPost("approve-recruiter/{userId}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> ApproveRecruiter(Guid userId)
+    {        
+        await _authService.ApproveRecruiter(userId);
+        return Ok();     
+    }
+
+    [HttpPost("request-recruiter-role")]
+    [Authorize]
+    public async Task<IActionResult> RequestRecruiterRole()
     {
-        try
-        {
-            await _authService.ApproveRecruiter(userId);
-            return Ok();
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return Unauthorized(ex.Message);
-        }
+        await _authService.RequestRecruiterRole();
+        return Ok();
+    }
+
+    [HttpPost("reject-recruiter/{userId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> RejectRecruiter(Guid userId)
+    {
+        await _authService.RejectRecruiter(userId);
+        return Ok();
+    }
+
+    [HttpGet("pending-recruiters")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetPendingRecruiters()
+    {
+        var result = await _authService.GetPendingRecruiters();
+        return Ok(result);
     }
 }

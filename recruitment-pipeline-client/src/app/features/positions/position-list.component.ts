@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { Position, PositionService } from '../../core/services/position.service';
 import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-position-list',
@@ -23,7 +24,11 @@ export class PositionListComponent implements OnInit {
     minRequiredExperience: [null as number | null]
   });
 
-  constructor(private positionService: PositionService, private authService: AuthService) { }
+  constructor(
+    private positionService: PositionService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadPositions();
@@ -37,7 +42,7 @@ export class PositionListComponent implements OnInit {
     this.isLoading.set(true);
     const raw = this.filterForm.getRawValue();
 
-    const role = this.authService.getUserRole();
+    const role = this.authService.role();
     const isPrivileged = role === 'Admin' || role === 'Recruiter';
 
     const request$ = isPrivileged
@@ -59,5 +64,9 @@ export class PositionListComponent implements OnInit {
       },
       error: () => { this.isLoading.set(false); }
     });
+  }
+
+  viewDetails(positionId: string): void {
+    this.router.navigate(['/positions', positionId]);
   }
 }

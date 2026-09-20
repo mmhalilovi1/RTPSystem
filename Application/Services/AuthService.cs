@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,17 +16,20 @@ namespace Infrastructure.Services
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly ITokenHasher _tokenHasher;
+        private readonly ICurrentUserService _currentUserService;
 
         public AuthService(
             IApplicationDbContext context, 
             IPasswordHasher passwordHasher,
             IJwtTokenGenerator jwtTokenGenerator,
-            ITokenHasher tokenHasher)
+            ITokenHasher tokenHasher,
+            ICurrentUserService currentUserService)
         {
             _context = context;
             _passwordHasher = passwordHasher;
             _jwtTokenGenerator = jwtTokenGenerator;
             _tokenHasher = tokenHasher;
+            _currentUserService = currentUserService;
         }
 
         public async Task<bool> Register(RegisterRequestDto registerRequestDto)
@@ -121,6 +125,37 @@ namespace Infrastructure.Services
             user.ApproveRecruiter();
             
             await _context.SaveChangesAsync();
+        }
+
+        public async Task RequestRecruiterRole()
+        {
+            var userId = _currentUserService.UserId;
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null)
+                throw new KeyNotFoundException("Korisnik nije pronađen.");
+
+            user.RequestRecruiterRole();
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RejectRecruiter(Guid userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null)
+                throw new KeyNotFoundException("Korisnik nije pronađen.");
+
+            user.RejectRecruiter();
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<PendingRecruiterDto>> GetPendingRecruiters()
+        {
+            return await _context.Users
+                .Where(u => u.Status == ApprovalStatus.PendingApproval)
+                .Select(u => new PendingRecruiterDto { Id = u.Id, Email = u.Email, CreatedAt = u.CreatedAt })
+                .ToListAsync();
         }
     }
 }

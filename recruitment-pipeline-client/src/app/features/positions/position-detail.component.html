@@ -1,0 +1,38 @@
+<div class="detail-page">
+  @if (isLoading()) {
+  <p>Učitavanje...</p>
+  } @else if (position(); as pos) {
+  <div class="detail-card">
+    <span class="status-badge">{{ pos.status }}</span>
+    <h1>{{ pos.title }}</h1>
+    <p class="meta">{{ pos.location }} · {{ pos.employmentType }} · min. {{ pos.requiredExperience }} god. iskustva</p>
+    <p class="description">{{ pos.description }}</p>
+
+    <div class="skills">
+      @for (skill of pos.requiredSkills; track skill) {
+      <span class="skill-tag">{{ skill }}</span>
+      }
+    </div>
+
+    @if (isPrivileged) {
+    <div class="actions">
+      @if (pos.status === 'Draft') {
+      <button (click)="publish()">Objavi</button>
+      }
+      @if (pos.status === 'Open') {
+      <button (click)="close()">Zatvori</button>
+      }
+      @if (pos.status === 'Closed') {
+      <button (click)="archive()">Arhiviraj</button>
+      }
+    </div>
+    }
+
+    @if (actionMessage()) {
+    <p class="form-error">{{ actionMessage() }}</p>
+    }
+  </div>
+  } @else {
+  <p>Pozicija nije pronađena.</p>
+  }
+</div>

@@ -1,0 +1,39 @@
+<div class="form-page">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="position-form">
+    <h1>Nova pozicija</h1>
+
+    <label for="title">Naslov</label>
+    <input id="title" formControlName="title" />
+
+    <label for="description">Opis</label>
+    <textarea id="description" formControlName="description" rows="4"></textarea>
+
+    <label for="location">Lokacija</label>
+    <input id="location" formControlName="location" />
+
+    <label for="employmentType">Vrsta zaposlenja</label>
+    <select id="employmentType" formControlName="employmentType">
+      <option value="Internship">Praksa</option>
+      <option value="PartTime">Part-time</option>
+      <option value="FullTime">Full-time</option>
+      <option value="Contract">Ugovor</option>
+    </select>
+
+    <label for="requiredExperience">Traženo iskustvo (godine)</label>
+    <input id="requiredExperience" type="number" formControlName="requiredExperience" />
+
+    <label for="deadline">Rok za prijave</label>
+    <input id="deadline" type="datetime-local" formControlName="deadline" />
+
+    <label for="skillsInput">Vještine (odvojene zarezom)</label>
+    <input id="skillsInput" formControlName="skillsInput" placeholder="C#, .NET, SQL" />
+
+    @if (errorMessage()) {
+    <div class="form-error">{{ errorMessage() }}</div>
+    }
+
+    <button type="submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Kreiranje...' : 'Kreiraj poziciju' }}
+    </button>
+  </form>
+</div>

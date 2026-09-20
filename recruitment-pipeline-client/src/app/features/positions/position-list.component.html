@@ -18,7 +18,7 @@
   } @else {
   <div class="position-cards">
     @for (position of positions(); track position.id) {
-    <div class="position-card">
+    <div class="position-card" (click)="viewDetails(position.id)">
       <h3>{{ position.title }}</h3>
       <p>{{ position.location }}</p>
       <p>{{ position.employmentType }}</p>

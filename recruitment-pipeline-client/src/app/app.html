@@ -3,6 +3,17 @@
 
   <div class="nav-links">
     @if (authService.isLoggedIn()) {
+    @if (authService.role() === 'Admin' || authService.role() === 'Recruiter') {
+    <a routerLink="/positions/new" routerLinkActive="active-link">Nova pozicija</a>
+    }
+    @if (authService.role() === 'Admin') {
+    <a routerLink="/admin/recruiters" routerLinkActive="active-link">Recruiteri</a>
+    }
+    @if (authService.role() === 'None') {
+    <button (click)="requestRecruiter()" class="nav-link-button">Postani recruiter</button>
+    }
+    <a routerLink="/my-profile" routerLinkActive="active-link">Moj profil</a>
+    <a routerLink="/my-applications" routerLinkActive="active-link">Moje prijave</a>
     <button (click)="logout()" class="nav-link-button">Odjava</button>
     } @else {
     <a routerLink="/login" routerLinkActive="active-link">Prijava</a>

@@ -1,0 +1,21 @@
+<div class="admin-page">
+  <h1>Zahtjevi za recruiter rolu</h1>
+
+  @if (isLoading()) {
+  <p>Učitavanje...</p>
+  } @else if (pending().length === 0) {
+  <p>Nema zahtjeva na čekanju.</p>
+  } @else {
+  <div class="pending-list">
+    @for (user of pending(); track user.id) {
+    <div class="pending-row">
+      <span>{{ user.email }}</span>
+      <div class="row-actions">
+        <button (click)="approve(user.id)">Odobri</button>
+        <button (click)="reject(user.id)" class="reject-button">Odbij</button>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>
