@@ -71,16 +71,26 @@ namespace Application.Services
         {
             var userId = _currentUserService.UserId;
             var candidate = await _context.Candidates.FirstOrDefaultAsync(c => c.UserId == userId);
-            
+
             if (candidate == null)
                 throw new InvalidOperationException("Morate imati kandidatski profil da biste vidjeli svoje prijave.");
-            
+
             var applications = await _context.Applications
-                .Include (a => a.InterviewStages)
+                .Include(a => a.InterviewStages)
                 .Where(a => a.CandidateId == candidate.Id)
                 .ToListAsync();
-            
-            return applications.Select(ApplicationResponseDto.FromEntity).ToList();
+
+            var positionIds = applications.Select(a => a.PositionId).Distinct().ToList();
+            var positionTitles = await _context.Positions
+                .Where(p => positionIds.Contains(p.Id))
+                .ToDictionaryAsync(p => p.Id, p => p.Title);
+
+            return applications.Select(a =>
+            {
+                var dto = ApplicationResponseDto.FromEntity(a);
+                dto.PositionTitle = positionTitles.GetValueOrDefault(a.PositionId);
+                return dto;
+            }).ToList();
         }
 
         public async Task<List<ApplicationResponseDto>> GetByPositionAsync(Guid positionId)
@@ -90,7 +100,17 @@ namespace Application.Services
                 .Where(a => a.PositionId == positionId)
                 .ToListAsync();
 
-            return applications.Select(ApplicationResponseDto.FromEntity).ToList();
+            var candidateIds = applications.Select(a => a.CandidateId).Distinct().ToList();
+            var candidateNames = await _context.Candidates
+                .Where(c => candidateIds.Contains(c.Id))
+                .ToDictionaryAsync(c => c.Id, c => c.FullName);
+
+            return applications.Select(a =>
+            {
+                var dto = ApplicationResponseDto.FromEntity(a);
+                dto.CandidateFullName = candidateNames.GetValueOrDefault(a.CandidateId);
+                return dto;
+            }).ToList();
         }
 
         public async Task<InterviewStageResponseDto> AddInterviewStageAsync(Guid applicationId, InterviewStageType stageType)
@@ -103,6 +123,7 @@ namespace Application.Services
                 throw new KeyNotFoundException("Prijava nije pronađena.");
 
             var stage = application.AddInterviewStage(stageType);
+            _context.InterviewStages.Add(stage);
 
             await _context.SaveChangesAsync();
             return InterviewStageResponseDto.FromEntity(stage);

@@ -1,0 +1,19 @@
+<div class="applications-page">
+  <h1>Moje prijave</h1>
+
+  @if (isLoading()) {
+  <p>Učitavanje...</p>
+  } @else if (applications().length === 0) {
+  <p>Još nemate poslanih prijava.</p>
+  } @else {
+  @for (app of applications(); track app.id) {
+  <div class="application-card" (click)="viewApplication(app.id)">
+    <div>
+      <h3>{{ app.positionTitle ?? 'Pozicija' }}</h3>
+      <span>Prijavljeno: {{ app.appliedAt | date:'dd.MM.yyyy' }}</span>
+    </div>
+    <span class="app-status">{{ app.status }}</span>
+  </div>
+  }
+  }
+</div>

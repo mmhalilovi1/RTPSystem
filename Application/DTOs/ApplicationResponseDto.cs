@@ -19,7 +19,9 @@ namespace Application.DTOs
         
         public DateTime AppliedAt { get; set; }
         public DateTime? DecisionAt { get; set; }
-                   
+        public string? PositionTitle { get; set; }
+        public string? CandidateFullName { get; set; }
+
         public List<InterviewStageResponseDto> InterviewStages { get; set; } = new List<InterviewStageResponseDto>();
     
         public static ApplicationResponseDto FromEntity(Domain.Entities.Application application)

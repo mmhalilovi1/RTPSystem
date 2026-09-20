@@ -31,6 +31,28 @@
     @if (actionMessage()) {
     <p class="form-error">{{ actionMessage() }}</p>
     }
+
+    @if (authService.role() === 'Candidate') {
+    <div class="apply-section">
+      <button (click)="apply()">Prijavi se na poziciju</button>
+      @if (applyMessage()) {
+      <p class="apply-message">{{ applyMessage() }}</p>
+      }
+    </div>
+    }
+
+    @if (isPrivileged && applications().length > 0) {
+    <div class="applications-section">
+      <h3>Prijave ({{ applications().length }})</h3>
+      @for (app of applications(); track app.id) {
+      <div class="application-row" (click)="viewApplication(app.id)">
+        <span>{{ app.candidateFullName ?? 'Kandidat' }}</span>
+        <span class="app-status">{{ app.status }}</span>
+        <span>{{ app.appliedAt | date:'dd.MM.yyyy' }}</span>
+      </div>
+      }
+    </div>
+    }
   </div>
   } @else {
   <p>Pozicija nije pronađena.</p>

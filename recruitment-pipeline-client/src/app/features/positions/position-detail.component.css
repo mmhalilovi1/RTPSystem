@@ -57,3 +57,34 @@
   margin-top: 1rem;
   color: var(--color-peach);
 }
+
+.apply-section, .applications-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.apply-message {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--color-peach);
+}
+
+.application-row {
+  display: flex;
+  justify-content: space-between;
+  background: var(--color-ink);
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.application-row:hover {
+  background: var(--color-border);
+}
+
+.app-status {
+  color: var(--color-peach);
+  font-weight: 600;
+}

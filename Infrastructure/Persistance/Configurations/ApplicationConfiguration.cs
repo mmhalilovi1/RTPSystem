@@ -25,10 +25,7 @@ namespace Infrastructure.Persistance.Configurations
 
             builder.Property(a => a.DecisionAt)
                 .IsRequired(false);
-
-            builder.HasMany(a => a.InterviewStages)
-                .WithOne();
-
+          
             builder.HasOne<Candidate>()
                 .WithMany()
                 .HasForeignKey(a => a.CandidateId)

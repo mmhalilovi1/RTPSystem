@@ -5,8 +5,8 @@ import { PositionListComponent } from './features/positions/position-list.compon
 import { PositionFormComponent } from './features/positions/position-form.component';
 import { PositionDetailComponent } from './features/positions/position-detail.component';
 import { CandidateProfileComponent } from './features/candidates/candidate-profile.component';
-/*import { MyApplicationsComponent } from './features/applications/my-applications.component';
-import { ApplicationDetailComponent } from './features/applications/application-detail.component';*/
+import { MyApplicationsComponent } from './features/applications/my-applications.component';
+import { ApplicationDetailComponent } from './features/applications/application-detail.component';
 import { AdminRecruitersComponent } from './features/admin/admin-recruiters.component';
 import { roleGuard } from './core/guards/role.guard';
 import { authGuard } from './core/guards/auth.guard';
@@ -27,16 +27,16 @@ export const routes: Routes = [
     component: CandidateProfileComponent,
     canActivate: [excludeRolesGuard(['Admin', 'Recruiter'])]
   },
-  /*{
+  {
     path: 'my-applications',
-    //component: MyApplicationsComponent,
+    component: MyApplicationsComponent,
     canActivate: [authGuard]
   },
   {
     path: 'applications/:id',
-    //component: ApplicationDetailComponent,
+    component: ApplicationDetailComponent,
     canActivate: [authGuard]
-  },*/
+  },
   {
     path: 'admin/recruiters',
     component: AdminRecruitersComponent,

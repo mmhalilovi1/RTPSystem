@@ -1,0 +1,98 @@
+<div class="app-detail-page">
+  @if (isLoading()) {
+  <p>Učitavanje...</p>
+  } @else if (application(); as app) {
+  <div class="detail-card">
+    <span class="status-badge">{{ app.status }}</span>
+    <h1>Prijava</h1>
+    <p class="meta">Prijavljeno: {{ app.appliedAt | date:'dd.MM.yyyy HH:mm' }}</p>
+    @if (app.decisionAt) {
+    <p class="meta">Odluka: {{ app.decisionAt | date:'dd.MM.yyyy HH:mm' }}</p>
+    }
+
+    @if (isPrivileged) {
+    <div class="add-stage-section">
+      <h3>Dodaj fazu intervjua</h3>
+      <div class="inline-form">
+        <select [value]="newStageType()" (change)="newStageType.set($any($event.target).value)">
+          @for (type of stageTypes; track type) {
+          <option [value]="type">{{ type }}</option>
+          }
+        </select>
+        <button (click)="addStage()">Dodaj</button>
+      </div>
+    </div>
+    }
+
+    <div class="stages-section">
+      <h3>Faze intervjua</h3>
+      @if (app.interviewStages.length === 0) {
+      <p>Još nema dodanih faza.</p>
+      }
+      @for (stage of app.interviewStages; track stage.id) {
+      <div class="stage-card">
+        <div class="stage-header">
+          <span class="stage-type">{{ stage.stageType }}</span>
+          <span class="stage-outcome outcome-{{ stage.outcome }}">{{ stage.outcome }}</span>
+        </div>
+
+        @if (stage.scheduledAt) {
+        <p class="meta">Zakazano: {{ stage.scheduledAt | date:'dd.MM.yyyy HH:mm' }}</p>
+        }
+        @if (stage.completedAt) {
+        <p class="meta">Završeno: {{ stage.completedAt | date:'dd.MM.yyyy HH:mm' }}</p>
+        }
+        @if (stage.notes) {
+        <p class="notes">{{ stage.notes }}</p>
+        }
+
+        @if (isPrivileged && stage.outcome === 'Pending') {
+        @if (!stage.scheduledAt) {
+        <div class="inline-form">
+          <input type="datetime-local"
+                 (input)="setScheduleDate(stage.id, $any($event.target).value)" />
+          <button (click)="scheduleStage(stage.id)">Zakaži</button>
+        </div>
+        } @else {
+        <div class="inline-form">
+          <select (change)="setCompleteOutcome(stage.id, $any($event.target).value)">
+            <option value="">Odaberi ishod</option>
+            <option value="Passed">Passed</option>
+            <option value="Failed">Failed</option>
+          </select>
+          <input placeholder="Napomena (opciono)"
+                 (input)="setCompleteNotes(stage.id, $any($event.target).value)" />
+          <button (click)="completeStage(stage.id)">Završi fazu</button>
+        </div>
+        }
+        }
+
+        @if (isPrivileged && stage.outcome !== 'Pending') {
+        <div class="feedback-section">
+          <h4>Feedback</h4>
+          @for (fb of feedbackByStage()[stage.id]; track fb.id) {
+          <div class="feedback-item">
+            <span class="feedback-rating">{{ fb.rating }}/5</span>
+            <span>{{ fb.comments }}</span>
+          </div>
+          }
+          <div class="inline-form">
+            <input type="number" min="1" max="5" placeholder="Ocjena (1-5)"
+                   (input)="setFeedbackRating(stage.id, $any($event.target).valueAsNumber)" />
+            <input placeholder="Komentar"
+                   [value]="feedbackCommentsByStage()[stage.id] ?? ''"
+                   (input)="setFeedbackComments(stage.id, $any($event.target).value)" />
+            <button (click)="addFeedback(stage.id)">Dodaj feedback</button>
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    @if (errorMessage()) {
+    <p class="form-error">{{ errorMessage() }}</p>
+    }
+  </div>
+  }
+</div>
