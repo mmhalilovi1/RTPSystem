@@ -6,6 +6,14 @@
     <span class="status-badge">{{ app.status }}</span>
     <h1>Prijava</h1>
     <p class="meta">Prijavljeno: {{ app.appliedAt | date:'dd.MM.yyyy HH:mm' }}</p>
+    @if (isPrivileged) {
+    <p class="meta">Kandidat: {{ app.candidateFullName ?? 'Nepoznato' }}</p>
+    @if (app.candidateResumeUrl) {
+    <p class="meta">CV: <a [href]="app.candidateResumeUrl" target="_blank">otvori</a></p>
+    } @else {
+    <p class="meta">CV nije postavljen.</p>
+    }
+    }
     @if (app.decisionAt) {
     <p class="meta">Odluka: {{ app.decisionAt | date:'dd.MM.yyyy HH:mm' }}</p>
     }
@@ -73,6 +81,7 @@
           @for (fb of feedbackByStage()[stage.id]; track fb.id) {
           <div class="feedback-item">
             <span class="feedback-rating">{{ fb.rating }}/5</span>
+            <span class="feedback-author">{{ fb.authorEmail ?? 'Nepoznat autor' }}</span>
             <span>{{ fb.comments }}</span>
           </div>
           }

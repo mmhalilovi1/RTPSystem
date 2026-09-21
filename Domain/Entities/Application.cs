@@ -50,8 +50,8 @@ namespace Domain.Entities
             if (Status == ApplicationStatus.Rejected || Status == ApplicationStatus.Accepted)
                 throw new InvalidOperationException("Ne može se dodati faza na zatvorenu aplikaciju.");
 
-            if (interviewStages.Any(s => s.StageType == stageType && s.Outcome == InterviewOutcome.Pending))
-                throw new InvalidOperationException("Ova faza je već u toku.");
+            if (interviewStages.Any(s => s.StageType == stageType))
+                throw new InvalidOperationException("Ova vrsta faze je već dodana na ovu prijavu.");
 
             var stage = new InterviewStage(Id, stageType);
             interviewStages.Add(stage);

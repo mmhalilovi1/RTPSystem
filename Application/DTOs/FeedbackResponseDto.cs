@@ -8,6 +8,7 @@
         public int Rating { get; set; }
         public string Comments { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string? AuthorEmail { get; set; }
 
         public static FeedbackResponseDto FromEntity(Domain.Entities.Feedback feedback)
         {

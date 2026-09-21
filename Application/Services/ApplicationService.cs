@@ -50,21 +50,30 @@ namespace Application.Services
             var application = await _context.Applications
                 .Include(a => a.InterviewStages)
                 .FirstOrDefaultAsync(a => a.Id == applicationId);
-
+            
             if (application == null) return null;
 
             var isPrivileged = _currentUserService.IsInRole("Admin") || _currentUserService.IsInRole("Recruiter");
 
             if (!isPrivileged)
             {
-                var candidate = await _context.Candidates
+                var candidatee = await _context.Candidates
                     .FirstOrDefaultAsync(c => c.UserId == _currentUserService.UserId);
 
-                if (candidate == null || application.CandidateId != candidate.Id)
+                if (candidatee == null || application.CandidateId != candidatee.Id)
                     throw new UnauthorizedAccessException("Nemate dozvolu da vidite ovu prijavu.");
             }
 
-            return ApplicationResponseDto.FromEntity(application);
+            var dto = ApplicationResponseDto.FromEntity(application);
+
+            var candidate = await _context.Candidates.FirstOrDefaultAsync(c => c.Id == application.CandidateId);
+            var position = await _context.Positions.FirstOrDefaultAsync(p => p.Id == application.PositionId);
+
+            dto.CandidateFullName = candidate?.FullName;
+            dto.CandidateResumeUrl = candidate?.ResumeUrl;
+            dto.PositionTitle = position?.Title;
+
+            return dto;
         }
 
         public async Task<List<ApplicationResponseDto>> GetMyApplicationsAsync()
@@ -211,7 +220,11 @@ namespace Application.Services
             _context.Feedbacks.Add(feedback);
             await _context.SaveChangesAsync();
 
-            return FeedbackResponseDto.FromEntity(feedback);
+            var dto = FeedbackResponseDto.FromEntity(feedback);
+            var author = await _context.Users.FirstOrDefaultAsync(u => u.Id == feedback.AuthorUserId);
+            dto.AuthorEmail = author?.Email;
+
+            return dto;
         }
 
         public async Task<List<FeedbackResponseDto>> GetFeedbackForStageAsync(Guid applicationId, Guid stageId)
@@ -232,7 +245,17 @@ namespace Application.Services
                 .Where(f => f.InterviewStageId == interviewStage.Id)
                 .ToListAsync();
 
-            return feedbacks.Select(FeedbackResponseDto.FromEntity).ToList();
+            var authorIds = feedbacks.Select(f => f.AuthorUserId).Distinct().ToList();
+            var authorEmails = await _context.Users
+                .Where(u => authorIds.Contains(u.Id))
+                .ToDictionaryAsync(u => u.Id, u => u.Email);
+
+            return feedbacks.Select(f =>
+            {
+                var dto = FeedbackResponseDto.FromEntity(f);
+                dto.AuthorEmail = authorEmails.GetValueOrDefault(f.AuthorUserId);
+                return dto;
+            }).ToList();
         }
     }
 }

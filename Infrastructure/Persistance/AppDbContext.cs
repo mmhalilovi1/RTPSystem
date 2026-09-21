@@ -1,12 +1,8 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
-
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
-
 
 namespace Infrastructure.Persistance
 {
@@ -29,5 +25,10 @@ namespace Infrastructure.Persistance
             base.OnModelCreating(modelBuilder);
         }
 
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<DateTime>()
+                .HaveConversion<UtcDateTimeConverter>();
+        }
     }
 }

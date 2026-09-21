@@ -21,6 +21,7 @@ export interface Application {
   interviewStages: InterviewStage[];
   positionTitle: string | null;
   candidateFullName: string | null;
+  candidateResumeUrl: string | null;
 }
 
 export interface Feedback {
@@ -30,6 +31,7 @@ export interface Feedback {
   rating: number;
   comments: string;
   createdAt: string;
+  authorEmail: string | null;
 }
 
 @Injectable({ providedIn: 'root' })
