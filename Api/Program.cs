@@ -41,6 +41,7 @@ builder.Services.AddScoped<IPositionService, PositionService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<ICandidateService, CandidateService>();
+builder.Services.AddHostedService<Infrastructure.BackgroundServices.PositionExpirationService>();
 
 builder.Services.AddAuthentication(options =>
 {
